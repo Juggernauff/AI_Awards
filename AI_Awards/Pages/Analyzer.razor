@@ -1,0 +1,87 @@
+﻿@page "/analyzer";
+
+@using AI_Awards.Models
+@using AI_Awards.Services
+
+@inject IJSRuntime JS
+@inject IFileService FileService
+@inject ITextService TextService
+
+<PageTitle>Анализатор</PageTitle>
+
+<h1>Analyzer</h1>
+
+<EditForm Model="@_form" OnValidSubmit="Analyse">
+    <label for="text">Введите текст:</label>
+    <InputTextArea id="text" @bind-Value="_form.Text" />
+
+    <label for="file">Загрузите файл (не более @(MAX_FILE_SIZE_MB) МБ):</label>
+    <InputFile id="file" OnChange="GetFile" accept=".txt,.mp3" />
+
+    <button type="submit">Отправить</button>
+    <button type="button" @onclick="ResetForm">Сбросить</button>
+</EditForm>
+
+@if (_result.WaitingAnswer)
+{
+    <p>Получение ответа...</p>
+}
+else if (!string.IsNullOrEmpty(_result.Text))
+{
+    <p>Результат: @_result.Text</p>
+}
+
+@code
+{
+    private long MAX_FILE_SIZE_MB;
+
+    private AnalyzerFormModel _form;
+    private AnalyzerResultModel _result;
+
+    protected override void OnInitialized()
+    {
+        _form = new AnalyzerFormModel();
+        _result = new AnalyzerResultModel();
+        MAX_FILE_SIZE_MB = AnalyzerFormModel.MAX_FILE_SIZE_BYTES / (1024 * 1024);
+    }
+
+    private async void Analyse(EditContext context)
+    {
+        _result.WaitingAnswer = true;
+        StateHasChanged();
+
+        try
+        {
+            if (!string.IsNullOrEmpty(_form.Text))
+            {
+                _result.Text = await TextService.TextAnalyze(_form.Text);
+            }
+            else if (_form.File != null)
+            {
+                _result.Text = await FileService.FileAnalyze(_form.File);
+            }
+        }
+        catch (Exception ex)
+        {
+            _result.Text = $"Произошла ошибка: {ex.Message}";
+        }
+
+        _result.WaitingAnswer = false;
+        StateHasChanged();
+    }
+
+    private async Task GetFile(InputFileChangeEventArgs e)
+    {
+        if (e.File.Size > AnalyzerFormModel.MAX_FILE_SIZE_BYTES)
+            await JS.InvokeVoidAsync("alert", $"Файл слишком большой. Максимальный размер - {MAX_FILE_SIZE_MB} МБ.");
+
+        _form.File = e.File;
+    }
+
+    private async Task ResetForm(MouseEventArgs e)
+    {
+        _form.Text = null;
+        _form.File = null;
+        await JS.InvokeVoidAsync("ResetForm", "file");
+    }
+}
