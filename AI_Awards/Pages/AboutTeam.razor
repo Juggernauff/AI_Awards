@@ -1,11 +1,49 @@
 ﻿@page "/about-team";
+@using AI_Awards.Models
 
 <PageTitle>О команде</PageTitle>
 
 <h1>О команде</h1>
 
-???
+<div class="team-container">
+    @foreach (var member in teamMembers)
+    {
+        <div class="team-card">
+            <img src="@member.ImagePath" alt="@member.FullName" class="team-photo" />
+            <div class="team-info">
+                <h2 class="team-name">@member.FullName</h2>
+                <p class="team-role">@member.Role</p>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
-
+    private List<TeamMember> teamMembers = new List<TeamMember>
+    {
+        new TeamMember
+        {
+            ImagePath = @"./Images/Милена Фатхуллина.png",
+            FullName = "Милена Фатхуллина",
+            Role = "Бизнес-партнер по работе с персоналом (HR)"
+        },
+        new TeamMember
+        {
+            ImagePath = "./Images/Александра Гриднёва.png",
+            FullName = "Александра Гриднёва",
+            Role = "Python разработчик"
+        },
+        new TeamMember
+        {
+            ImagePath = "./Images/Алена Липагина.png",
+            FullName = "Алена Липагина",
+            Role = "Специалист по Machine learning"
+        },
+        new TeamMember
+        {
+            ImagePath = "./Images/Данила Ходарев.jpg",
+            FullName = "Данила Ходарев",
+            Role = "C# разработчик"
+        }
+    };
 }

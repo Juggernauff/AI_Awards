@@ -10,4 +10,19 @@
     <Folder Include="Sounds\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Images\Милена Фатхуллина.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Александра Гриднёва.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Алена Липагина.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Images\Данила Ходарев.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -9,26 +9,32 @@
 
 <PageTitle>Анализатор</PageTitle>
 
-<h1>Analyzer</h1>
+<h1>Анализатор</h1>
 
-<EditForm Model="@_form" OnValidSubmit="Analyse">
-    <label for="text">Введите текст:</label>
-    <InputTextArea id="text" @bind-Value="_form.Text" />
+<EditForm Model="@_form" OnValidSubmit="Analyse" class="form-container">
+    <div class="form-group">
+        <label for="text" class="form-label">Введите текст:</label>
+        <InputTextArea id="text" @bind-Value="_form.Text" class="form-control"  />
+    </div>
 
-    <label for="file">Загрузите файл (не более @(MAX_FILE_SIZE_MB) МБ):</label>
-    <InputFile id="file" OnChange="GetFile" accept=".txt,.mp3" />
+    <div class="form-group">
+        <label for="file" class="form-label">Загрузите файл (не более @(MAX_FILE_SIZE_MB) МБ):</label>
+        <InputFile id="file" OnChange="GetFile" accept=".txt,.mp3" class="form-control" />
+    </div>
 
-    <button type="submit">Отправить</button>
-    <button type="button" @onclick="ResetForm">Сбросить</button>
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary">Отправить</button>
+        <button type="button" @onclick="ResetForm" class="btn btn-secondary">Сбросить</button>
+    </div>
 </EditForm>
 
 @if (_result.WaitingAnswer)
 {
-    <p>Получение ответа...</p>
+    <p class="result-waiting">Получение ответа...</p>
 }
 else if (!string.IsNullOrEmpty(_result.Text))
 {
-    <p>Результат: @_result.Text</p>
+    <p class="result-text">Результат: @_result.Text</p>
 }
 
 @code
