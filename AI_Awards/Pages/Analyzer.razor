@@ -34,7 +34,10 @@
 }
 else if (!string.IsNullOrEmpty(_result.Text))
 {
-    <p class="result-text">Результат: @_result.Text</p>
+    <div class="result-container">
+        <p style="text-align: center;"><b>Результат</b></p>
+        <p class="result-text">@_result.Text</p>
+    </div>
 }
 
 @code

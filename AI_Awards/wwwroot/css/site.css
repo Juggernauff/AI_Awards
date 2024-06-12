@@ -64,8 +64,8 @@ a, .btn-link {
     }
 
 .form-container {
-    max-width: 600px;
-    margin: auto;
+    width: 100%;
+    margin-bottom: 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -91,6 +91,10 @@ a, .btn-link {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+.form-control textarea {
+    height: 100px;
 }
 
 .button-group {
@@ -137,8 +141,18 @@ a, .btn-link {
 .result-text {
     font-size: 18px;
     color: black;
-    text-align: center;
+    text-align: left;
     margin-top: 20px;
+}
+
+.result-container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
 }
 
 .team-container {
