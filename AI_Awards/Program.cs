@@ -13,6 +13,12 @@ builder.Services.AddScoped<IPythonService, PythonService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<ITextService, TextService>();
 
+builder.Services.AddSignalR(options =>
+{
+    options.MaximumReceiveMessageSize = 32 * 1024 * 1024;
+    options.StreamBufferCapacity = 100;
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -27,7 +33,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapBlazorHub();
+app.MapBlazorHub(options =>
+{
+    options.ApplicationMaxBufferSize = 32 * 1024 * 1024;
+    options.TransportMaxBufferSize = 32 * 1024 * 1024;
+});
+
 app.MapFallbackToPage("/_Host");
 
 app.Run();
